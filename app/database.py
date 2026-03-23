@@ -1,11 +1,12 @@
-from datetime import datetime
 import re
-from typing import Annotated
+
+from datetime import datetime
+from typing import Annotated, AsyncGenerator
 from uuid import UUID, uuid4
 
 
 from sqlalchemy import func
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncAttrs
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker, AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase, declared_attr, Mapped, mapped_column
 
 from app.config import get_db_url
@@ -19,6 +20,13 @@ async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 uuid_pk = Annotated[UUID, mapped_column(primary_key=True, default=uuid4)]
 created_at = Annotated[datetime, mapped_column(server_default=func.now())]
 updated_at = Annotated[datetime, mapped_column(server_default=func.now(), onupdate=datetime.now)]
+
+async def get_session() -> AsyncGenerator[AsyncSession, None]:
+    """Dependency для получения сессии БД в FastAPI.
+    Автоматически закрывает сессию после использования.
+    """
+    async with async_session_maker() as db_session:
+        yield db_session
 
 class Base(AsyncAttrs, DeclarativeBase):
     __abstract__ = True
