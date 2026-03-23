@@ -4,8 +4,12 @@ from typing import Annotated
 
 from app.api.api_key import validate
 from app.database import get_session
+from app.repositories.chat_session_repository import ChatSessionRepository
 from app.repositories.document_repository import DocumentRepository
 from app.repositories.document_vector_repository import DocumentVectorRepository
+from app.repositories.message_repository import MessageRepository
+from app.services.chat_service import ChatService
+from app.services.send_message_pipeline import SendMessagePipeline, build_pipeline
 
 
 async def get_document_vector_repository(
@@ -19,6 +23,35 @@ async def get_document_repository(
 ) -> DocumentRepository:
     """Dependency для получения репозитория документов."""
     return DocumentRepository(session)
+
+
+async def get_chat_session_repository(
+    session: Annotated[AsyncSession, Depends(get_session)]
+) -> ChatSessionRepository:
+    return ChatSessionRepository(session)
+
+
+async def get_message_repository(
+    session: Annotated[AsyncSession, Depends(get_session)]
+) -> MessageRepository:
+    return MessageRepository(session)
+
+
+def get_send_message_pipeline(
+    document_vector_repository: Annotated[DocumentVectorRepository, Depends(get_document_vector_repository)],
+    document_repository: Annotated[DocumentRepository, Depends(get_document_repository)],
+) -> SendMessagePipeline:
+    return build_pipeline(
+        document_vector_repository=document_vector_repository,
+        document_repository=document_repository,
+    )
+
+
+def get_chat_service(
+    send_message_pipeline: Annotated[SendMessagePipeline, Depends(get_send_message_pipeline)],
+) -> ChatService:
+    return ChatService(send_message_pipeline)
+
 
 async def validate_api_key(
     api_key: Annotated[str, Depends(validate)]

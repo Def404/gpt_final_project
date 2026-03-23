@@ -12,8 +12,10 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
 from app.database import DATABASE_URL, Base
+from app.models.chat_session import ChatSession
 from app.models.document import Document
 from app.models.document_vector import DocumentVector
+from app.models.message import Message
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
