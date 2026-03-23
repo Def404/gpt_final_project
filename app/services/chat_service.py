@@ -65,7 +65,7 @@ class ChatService:
             )
         )
 
-        from app.services.send_message_pipeline import PipelineContext
+        from services.send_message_pipeline import PipelineContext
 
         context = PipelineContext(
             user_message_text=text,

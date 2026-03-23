@@ -13,7 +13,6 @@ class MessageRequest(BaseModel):
 class ChatSessionResponse(BaseModel):
     uid: UUID
     title: str
-    is_active_in_bot: bool
     is_delete: bool
     chat_metadata: dict | None
     created_at: datetime

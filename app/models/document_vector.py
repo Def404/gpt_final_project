@@ -17,7 +17,6 @@ class DocumentVector(Base):
     document_uid: Mapped[UUID] = mapped_column(ForeignKey   ("documents.documents.uid"), nullable=False)
     metadata_content: Mapped[dict] = mapped_column(JSONB, nullable=True)
 
-    document: Mapped["Document"] = relationship("Document", back_populates="document_vectors")
 
     def __str__(self):
         return f"{self.__class__.__name__}(uid={self.uid}, document_uid={self.document_uid})"
