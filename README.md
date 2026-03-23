@@ -99,6 +99,37 @@ requirements.txt
 - Если `search_query` пуст (например, приветствие), возвращается приветственный ответ.
 - Если ответ не сгенерирован корректно, возвращается безопасный fallback.
 
+### 4.4 Блок-схема `send_message` (основное)
+
+```mermaid
+flowchart TD
+    A[Запрос POST /api/chats/messages/send] --> B[Проверка X-API-KEY]
+    B --> C[Валидация message_text]
+    C --> D{chat_uid передан?}
+    D -->|Нет| E[Создать chat_session]
+    D -->|Да| F[Загрузить chat_session]
+    E --> G[Сохранить user_message]
+    F --> G
+    G --> H[ResearchQuestionStep: search_query]
+    H --> I{search_query пуст?}
+    I -->|Да| J[Fallback: приветственный ответ]
+    I -->|Нет| K[SearchStep: поиск по pgvector]
+    K --> L[AnswerStep: final_answer по контексту]
+    L --> M[Сохранить bot_message]
+    J --> M
+    M --> N[Вернуть user_message, bot_message, chat]
+```
+
+Краткое описание блоков:
+- `Проверка X-API-KEY` — защита endpoint от неавторизованных запросов.
+- `Валидация message_text` — отбрасывает пустые/некорректные сообщения.
+- `Создать/Загрузить chat_session` — определяет контекст диалога.
+- `Сохранить user_message` — фиксирует вход пользователя в истории.
+- `ResearchQuestionStep` — превращает вопрос пользователя в поисковый запрос.
+- `SearchStep` — находит релевантные фрагменты документов по embeddings.
+- `AnswerStep` — формирует итоговый ответ только по найденному контексту.
+- `Сохранить bot_message` — фиксирует ответ бота и завершает цикл запроса.
+
 ## 5. Конфигурация окружения
 
 Проект читает переменные из файла `.env` (по образцу `.env.template`).
