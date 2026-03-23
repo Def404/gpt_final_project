@@ -1,7 +1,7 @@
 from sqlalchemy.dialects.postgresql import JSONB, TEXT
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.database import Base, uuid_pk
+from database import Base, uuid_pk
 
 
 class Document(Base):

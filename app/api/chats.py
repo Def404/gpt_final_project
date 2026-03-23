@@ -2,14 +2,14 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from app.api.dependencies import (
+from api.dependencies import (
     get_chat_service,
     get_chat_session_repository,
     get_message_repository,
     validate_api_key,
 )
-from app.schemas.chat import MessageRequest, SendMessageResponse
-from app.services.chat_service import ChatService
+from schemas.chat import MessageRequest, SendMessageResponse
+from services.chat_service import ChatService
 
 
 router = APIRouter(prefix="/chats", tags=["chats"])

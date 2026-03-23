@@ -2,14 +2,14 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Annotated
 
-from app.api.api_key import validate
-from app.database import get_session
-from app.repositories.chat_session_repository import ChatSessionRepository
-from app.repositories.document_repository import DocumentRepository
-from app.repositories.document_vector_repository import DocumentVectorRepository
-from app.repositories.message_repository import MessageRepository
-from app.services.chat_service import ChatService
-from app.services.send_message_pipeline import SendMessagePipeline, build_pipeline
+from api.api_key import validate
+from database import get_session
+from repositories.chat_session_repository import ChatSessionRepository
+from repositories.document_repository import DocumentRepository
+from repositories.document_vector_repository import DocumentVectorRepository
+from repositories.message_repository import MessageRepository
+from services.chat_service import ChatService
+from services.send_message_pipeline import SendMessagePipeline, build_pipeline
 
 
 async def get_document_vector_repository(

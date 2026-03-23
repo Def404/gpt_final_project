@@ -1,9 +1,15 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from sqlalchemy import Boolean
 from sqlalchemy.dialects.postgresql import JSONB, TEXT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database import Base, uuid_pk
-from app.models.message import Message
+from database import Base, uuid_pk
+
+if TYPE_CHECKING:
+    from models.message import Message
 
 
 class ChatSession(Base):

@@ -1,8 +1,8 @@
 import time
 
-from app.config_logging import get_logger
-from app.schemas.similarity import SimilarityResponse, SimilarityResult
-from app.services.openai_embedding import OpenAIEmbeddingService
+from config_logging import get_logger
+from schemas.similarity import SimilarityResponse, SimilarityResult
+from services.openai_embedding import OpenAIEmbeddingService
 
 
 logger = get_logger(__name__)

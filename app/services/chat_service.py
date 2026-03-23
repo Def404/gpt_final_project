@@ -2,9 +2,9 @@ from uuid import UUID
 
 from fastapi import HTTPException, status
 
-from app.config_logging import get_logger
-from app.models.chat_session import ChatSession
-from app.models.message import Message
+from config_logging import get_logger
+from models.chat_session import ChatSession
+from models.message import Message
 
 
 logger = get_logger(__name__)

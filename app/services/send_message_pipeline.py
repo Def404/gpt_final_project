@@ -6,15 +6,15 @@ from uuid import UUID
 
 from openai import OpenAI
 
-from app.constants.llm_json_schemas import (
+from constants.llm_json_schemas import (
     ANSWER_JSON_SCHEMA,
     RESEARCH_PLAN_JSON_SCHEMA,
 )
-from app.config import settings
-from app.config_logging import get_logger
-from app.models.message import Message
-from app.services.embedding_similarity import EmbeddingSimilarityService
-from app.services.openai_embedding import OpenAIEmbeddingService
+from config import settings
+from config_logging import get_logger
+from models.message import Message
+from services.embedding_similarity import EmbeddingSimilarityService
+from services.openai_embedding import OpenAIEmbeddingService
 
 
 logger = get_logger(__name__)

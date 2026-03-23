@@ -3,7 +3,7 @@ from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.chat_session import ChatSession
+from models.chat_session import ChatSession
 
 
 class ChatSessionRepository:

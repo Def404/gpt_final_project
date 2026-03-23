@@ -9,7 +9,7 @@ from sqlalchemy import func
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker, AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase, declared_attr, Mapped, mapped_column
 
-from app.config import get_db_url
+from config import get_db_url
 
 DATABASE_URL = get_db_url()
 

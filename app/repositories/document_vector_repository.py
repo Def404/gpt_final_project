@@ -1,7 +1,7 @@
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.document_vector import DocumentVector
+from models.document_vector import DocumentVector
 
 
 class DocumentVectorRepository:

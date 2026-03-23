@@ -4,8 +4,8 @@ from sqlalchemy.dialects.postgresql import JSONB, TEXT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from uuid import UUID
 
-from app.database import Base, uuid_pk
-from app.models.document import Document
+from database import Base, uuid_pk
+from models.document import Document
 
 
 class DocumentVector(Base):

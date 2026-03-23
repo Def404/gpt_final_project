@@ -4,8 +4,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 
-from app.api import router as api_router
-from app.config_logging import get_logger
+from api import router as api_router
+from config_logging import get_logger
 
 
 logger = get_logger(__name__)
