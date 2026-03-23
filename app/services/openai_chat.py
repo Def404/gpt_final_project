@@ -35,6 +35,9 @@ class OpenAIChatService:
             model=self.model_name,
             messages=messages,
             temperature=0.2,
+            top_p=0.9,
+            max_tokens=1000,
+            stream=False,
         )
         content = completion.choices[0].message.content
         if not content:
