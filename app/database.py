@@ -1,4 +1,5 @@
 from datetime import datetime
+import re
 from typing import Annotated
 from uuid import UUID, uuid4
 
@@ -22,9 +23,18 @@ updated_at = Annotated[datetime, mapped_column(server_default=func.now(), onupda
 class Base(AsyncAttrs, DeclarativeBase):
     __abstract__ = True
 
+    @staticmethod
+    def _pluralize(word: str) -> str:
+        if word.endswith("y") and len(word) > 1 and word[-2] not in "aeiou":
+            return f"{word[:-1]}ies"
+        if re.search(r"(s|x|z|ch|sh)$", word):
+            return f"{word}es"
+        return f"{word}s"
+
     @declared_attr.directive
     def __tablename__(cls) -> str:
-        return f"{cls.__name__.lower()}s"
+        snake_case_name = re.sub(r"(?<!^)(?=[A-Z])", "_", cls.__name__).lower()
+        return cls._pluralize(snake_case_name)
 
     created_at: Mapped[created_at]
     updated_at: Mapped[updated_at]
